@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const MainContent = (props) => {
   const [text, setText] = useState("");
@@ -12,69 +13,71 @@ const MainContent = (props) => {
   const uppercaseHandler = () => {
     const newText = text.toUpperCase();
     setText(newText);
-    props.showAlert("Converted to Uppercase!");
+    toast.success("Converted to Uppercase!");
   };
 
   // To LowerCase the text
   const lowercaseHandler = () => {
     const newText = text.toLowerCase();
     setText(newText);
-    props.showAlert("Converted to Lowercase!");
+    toast.success("Converted to Lowercase!");
   };
 
   // To Clear the text
   const clearHandler = () => {
     const newText = "";
     setText(newText);
-    props.showAlert("Clear All text!");
+    toast.success("Clear All text!");
   };
 
   // To Replace the text
   const replaceHandler = () => {
     const repval = prompt("Enter the word to be replaced:");
-    const todoreplace = new RegExp(repval, "");
+    const todoreplace = new RegExp(repval, "g");
 
     const tobereplace = prompt("Enter the text that you want to replace with:");
 
     const newText = text.replace(todoreplace, tobereplace);
     setText(newText);
-    props.showAlert("Replace text!");
+    toast.success("Replaced all occurrences of the text!");
   };
 
   // To Copy the text
   const copyHandler = () => {
     navigator.clipboard.writeText(text);
-    props.showAlert("Copied!");
+    toast.success("Copied!");
   };
 
   // To Remove Extra Spaces
   const extraSpacesHandler = () => {
     const newText = text.split(/[ ]+/);
     setText(newText.join(" "));
-    props.showAlert("Remove Extra Spaces!");
+    toast.success("Remove Extra Spaces!");
   };
 
   // To Capitalize the first letter of the text
-  const capitalizeHandler = () => {
-    // const str = text;
-    // const newStr = text.split(/\s+/).map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ');
-    const newStr = text.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.substring(1).toLowerCase()).join(' ');
-    setText(newStr);
-    props.showAlert("Capitalize the first letter of the text!");
+  const capitalizeHandler = () => {    
+
+    const newStr = text.replace(/\b\w+/g, (word) => 
+      word.charAt(0).toUpperCase() + word.substring(1).toLowerCase()
+    );
+    
+    setText(newStr); // Set the capitalized text
+    toast.success("Capitalize the first letter of the text!");
   };
 
   // To Separte the 
   const comaHandler = () => {
-    const textString = text.toString();
-    const rows = textString.split(", ").join('\n');
-    // console.log(rows);
-    // const newStr = textString.split(",").join(", ");
-    // const newStr = rows.map(row => row.replace(",", "\n"));
-    // rows.map(row => row.split(','));
 
-    setText(rows);
-    // extraSpacesHandler();
-    props.showAlert("Serparte with Coma and Remove");
+
+    const textString = text.toString(); // Convert text to string if it's not already
+    const spaceRemove = textString.split(/[ ]+/).join(" "); // Remove all extra spaces if present
+    const newStr1 = spaceRemove.split(", "); // Split the string into an array using ", " as the separator
+    const newStr = newStr1.map(item => item.replace(",", "\n")); // Map over the array and replace commas with newlines
+    
+    setText(newStr.join("\n")); // Join the array back into a string with newline characters
+    
+    toast.success("Serparte with Coma and Remove");
   };
 
   return (
