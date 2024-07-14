@@ -14,6 +14,7 @@ const RTE = ({
                 control={control}
                 render={({ field: { onChange } }) => (
                     <Editor
+                     apiKey= {process.env.REACT_APP_TINYMCE_API_KEY}
                         initialValue={defaultValue}
                         init={{
                             initialValue: defaultValue,
