@@ -1,10 +1,11 @@
+import Cards from "./components/CustomComponents/Cards";
 import Header from "./components/CustomComponents/Header";
 
 function App() {
   return (
-    <div className="">
+    <div className="h-screen" >
       <Header/>
-      
+      <Cards />
     </div>
   );
 }

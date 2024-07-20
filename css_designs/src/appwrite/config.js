@@ -13,7 +13,6 @@ export class Service {
     }
 
     async getPosts({ category } = {}) {
-        console.log(conf.appwriteUrl);
         try {
             // Create the base queries array
             let queries = [];
